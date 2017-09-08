@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri>/api/x_77590_dlp_eur/dlpincidentsync/create</default_operation_uri>
+        <enforce_acl>209a24784fb23200303022d18110c704</enforce_acl>
+        <http_method>POST</http_method>
+        <name>create</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+	
+	
+	gs.info("**** create incidents service ***** - START" );
+	var data = request.body.data;
+	
+	gs.info("**** request data : "  + data );
+	
+	var UUID = data.uuid;
+	var incidents = data.incidents;
+	
+	gs.info("**** incidents ***** - " + incidents);
+	gs.info("**** incidents length ***** - " + incidents.length );
+	
+	if(incidents.length == 0)
+		{
+	/*	var writer = response.getStreamWriter(),
+		hdrs = {};
+			
+			hdrs['Content-Type'] = 'application/json';
+			response.setHeaders(hdrs);
+			response.setStatus(400);
+			
+			writer.writeString("{\"UUID\": 2391723913901739,");
+				writer.writeString("\"errors\":");
+				
+				var errorArray = [];
+				var errorObj = {};
+					
+					errorObj.messageId = "400_0001";
+					errorObj.message = "Request has no incident(s)";
+					errorArray.push(errorObj);
+					
+					writer.writeString(global.JSON.stringify(errorArray));
+					writer.writeString("}");
+					return;*/
+			var myError = new sn_ws_err.ServiceError();
+	  myError.setStatus(400);
+	  myError.setMessage("Request has no incident(s)");
+			myError.setDetail("");
+	  //myError.setDetail(Here are the details about this error');
+			response.setError(myError);
+	  return;
+				}
+				
+				for(var i=0; i< incidents.length; i++)
+					{
+					var gr= new GlideRecord('x_77590_dlp_eur_dlp_incidents');
+					gr.addQuery('incidentid', incidents[i].incidentId);
+					gr.query();
+					
+					if(gr.getRowCount() == 1)
+						{
+						gr.next();
+						gs.info("**** Got Duplicate incidents incidentid ***** - " + incidents[i].incidentid );
+						gr.incidentremediatoremail = incidents[i].incidentRemediatorEmail;
+						gr.assigned_to=incidents[i].incidentRemediatorEmail;
+						gr.policyname=incidents[i].policyName;
+						gr.incidenttype=incidents[i].incidentType;
+						gr.filepath=incidents[i].filePath;
+						gr.severity=incidents[i].severity;
+						gr.daystoremediate=incidents[i].daysToRemediate;
+						gr.setWorkflow(false);
+						gr.update("Duplicate");
+							gs.info("**** incident daysToRemediate ***** - " + incidents[i].daysToRemediate);
+						continue;
+					}
+					
+					gr.initialize();
+					gr.incidentid= incidents[i].incidentId;
+					gr.incidentremediatoremail = incidents[i].incidentRemediatorEmail;
+					gr.assigned_to=incidents[i].incidentRemediatorEmail;
+					gr.policyname=incidents[i].policyName;
+					//gr.owner=body[i].incidentRemediatorEmail;
+					gr.incidenttype=incidents[i].incidentType;
+					gr.filepath=incidents[i].filePath;
+					gr.severity=incidents[i].severity;
+					gr.daystoremediate=incidents[i].daysToRemediate;
+					gr.state=1;
+					gr.insert();
+						gs.info(" %%% incident daysToRemediate %%%% - " + incidents[i].daysToRemediate);
+				}
+				gs.info("**** create incidents service ***** - END" );
+			})(request, response);]]></operation_script>
+        <operation_uri>/api/x_77590_dlp_eur/v1/dlpincidentsync/create</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/create</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-05-04 03:40:40</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>303aae814f223200303022d18110c72c</sys_id>
+        <sys_mod_count>50</sys_mod_count>
+        <sys_name>create</sys_name>
+        <sys_package display_value="DLP End User Remediation Portal" source="x_77590_dlp_eur">c6eaf9a44f223200303022d18110c732</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="DLP End User Remediation Portal">c6eaf9a44f223200303022d18110c732</sys_scope>
+        <sys_update_name>sys_ws_operation_303aae814f223200303022d18110c72c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-05-30 05:50:50</sys_updated_on>
+        <web_service_definition display_value="DlpIncidentSync">78d9aa814f223200303022d18110c7bf</web_service_definition>
+        <web_service_version display_value="v1">c0177f134f663200303022d18110c775</web_service_version>
+    </sys_ws_operation>
+</record_update>

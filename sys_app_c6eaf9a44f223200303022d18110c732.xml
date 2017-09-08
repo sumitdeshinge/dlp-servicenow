@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_app">
+    <sys_app action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <enforce_license>log</enforce_license>
+        <js_level>helsinki_es5</js_level>
+        <licensable>true</licensable>
+        <license_model>none</license_model>
+        <logo/>
+        <menu display_value="DLP End User Remediation Portal">8eea35284f223200303022d18110c70f</menu>
+        <name>DLP End User Remediation Portal</name>
+        <private>false</private>
+        <restrict_table_access>false</restrict_table_access>
+        <runtime_access_tracking>permissive</runtime_access_tracking>
+        <scope>x_77590_dlp_eur</scope>
+        <scoped_administration>false</scoped_administration>
+        <short_description/>
+        <source>x_77590_dlp_eur</source>
+        <store_correlation_id/>
+        <store_url/>
+        <sys_class_name>sys_app</sys_class_name>
+        <sys_code/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-05-02 10:53:37</sys_created_on>
+        <sys_id>c6eaf9a44f223200303022d18110c732</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-06-01 10:22:44</sys_updated_on>
+        <template/>
+        <trackable>true</trackable>
+        <user_role display_value="x_77590_dlp_eur.user" name="x_77590_dlp_eur.user">caea35284f223200303022d18110c712</user_role>
+        <vendor/>
+        <vendor_prefix/>
+        <version>1.1.2</version>
+    </sys_app>
+</record_update>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element extends="task" label="DLP Incidents" max_length="40" name="x_77590_dlp_eur_dlp_incidents" sizeclass="1" type="collection">
+        <element display="true" label="Days To Remediate" max_length="3" name="daystoremediate" read_only="true" type="integer"/>
+        <element label="FilePath" max_length="40" name="filepath" read_only="true" type="string"/>
+        <element label="IncidentId" max_length="40" name="incidentid" read_only="true" type="string"/>
+        <element label="IncidentRemediatorEmail" max_length="40" name="incidentremediatoremail" type="string"/>
+        <element label="IncidentType" max_length="40" name="incidenttype" read_only="true" type="string"/>
+        <element label="isReassigned" max_length="40" name="isreassigned" read_only="true" type="boolean"/>
+        <element label="isRemediationActionRequested" max_length="40" name="isremediationactionrequested" type="boolean"/>
+        <element label="PolicyName" max_length="40" name="policyname" read_only="true" type="string"/>
+        <element label="Reassigned To" max_length="32" name="reassigned_to" reference="sys_user" type="reference"/>
+        <element label="ResponseRuleId" max_length="255" name="responseruleid" read_only="true" type="string"/>
+        <element label="ResponseRuleName" max_length="200" name="responserulename" read_only="true" type="string"/>
+        <element label="Severity" max_length="40" name="severity" read_only="true" type="string"/>
+        <element label="ResponseRule" max_length="32" name="u_responserule" reference="x_77590_dlp_eur_remediationaction" type="reference"/>
+    </element>
+</database>

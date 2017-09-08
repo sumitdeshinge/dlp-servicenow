@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_documentation element="requestedby" label="requestedBy" language="en" table="x_77590_dlp_eur_dlpincidentactionrequest">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>requestedby</element>
+            <help/>
+            <hint/>
+            <label>requestedBy</label>
+            <language>en</language>
+            <name>x_77590_dlp_eur_dlpincidentactionrequest</name>
+            <plural>requestedBys</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-05-25 10:15:31</sys_created_on>
+            <sys_customer_update>true</sys_customer_update>
+            <sys_id>2cce00c44f833200303022d18110c7f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>requestedBy</sys_name>
+            <sys_package display_value="DLP End User Remediation Portal" source="x_77590_dlp_eur">c6eaf9a44f223200303022d18110c732</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="DLP End User Remediation Portal">c6eaf9a44f223200303022d18110c732</sys_scope>
+            <sys_update_name>sys_documentation_x_77590_dlp_eur_dlpincidentactionrequest_requestedby_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-05-25 10:15:31</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

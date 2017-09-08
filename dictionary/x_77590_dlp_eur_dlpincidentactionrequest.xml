@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="DlpIncidentActionRequest" max_length="40" name="x_77590_dlp_eur_dlpincidentactionrequest" type="collection">
+        <element label="dlpIncidentId" max_length="40" name="dlpincidentid" type="longint"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="reassignedToName" max_length="255" name="reassignedto" type="string_full_utf8"/>
+        <element label="reassignedToEmail" max_length="255" name="reassignedtoemail" type="string_full_utf8"/>
+        <element label="requestedBy" max_length="255" name="requestedby" type="string_full_utf8"/>
+        <element label="requestType" max_length="40" name="requesttype" type="string"/>
+        <element label="responseRuleId" max_length="40" name="responseruleid" type="longint"/>
+    </element>
+</database>

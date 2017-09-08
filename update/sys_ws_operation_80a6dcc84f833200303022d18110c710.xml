@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>209a24784fb23200303022d18110c704</enforce_acl>
+        <http_method>GET</http_method>
+        <name>GetRequests</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+	gs.info("**** Incident Action Request Started ***** ");
+	var writer = response.getStreamWriter(),
+		hdrs = {},
+		record_limit = 100,
+		gr_actions = new GlideRecord('x_77590_dlp_eur_dlpincidentactionrequest');
+	hdrs['Content-Type'] = 'application/json';
+	response.setStatus(200);
+	response.setHeaders(hdrs);
+	gr_actions.setLimit(record_limit);
+	gr_actions.orderBy('number');
+	gr_actions.query();
+	
+	var uuid = gs.generateGUID();
+	writer.writeString("{\"uuid\" : \"" +uuid + "\" , \"incidentActions\" : ");
+	var incidentActions = [];
+	
+	gs.info(" #### Record count " + gr_actions.getRowCount());
+	
+	while (gr_actions.next()) {
+		
+		
+		var incidentAction = {};
+		
+		gs.info(" #### action number" + gr_actions.number );
+		
+		incidentAction.incidentActionRequestId = gr_actions.number  + '';
+		incidentAction.incidentId = gr_actions.dlpincidentid  + '';
+		incidentAction.responseRuleId = gr_actions.responseruleid  + '';
+		incidentAction.requestedByUserId = gr_actions.requestedby + '';
+		//TODO: Change the column requesttype to actionType
+		incidentAction.actionType = gr_actions.requesttype + '';
+		//TODO: change the column reassignedto to reassignedtoname
+		incidentAction.reassignedToName = gr_actions.reassignedto + '';
+		incidentAction.reassignedToEmail = gr_actions.reassignedtoemail + '';
+		
+		incidentActions.push(incidentAction);
+	}
+	
+	writer.writeString(global.JSON.stringify(incidentActions));
+	//  close the response object
+	writer.writeString("}");
+		
+	gs.info("**** Incident Action Request Completed ***** ");
+	
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_77590_dlp_eur/v1/incidentactionrequests</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-05-25 10:50:50</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>80a6dcc84f833200303022d18110c710</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>GetRequests</sys_name>
+        <sys_package display_value="DLP End User Remediation Portal" source="x_77590_dlp_eur">c6eaf9a44f223200303022d18110c732</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="DLP End User Remediation Portal">c6eaf9a44f223200303022d18110c732</sys_scope>
+        <sys_update_name>sys_ws_operation_80a6dcc84f833200303022d18110c710</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-05-26 03:59:30</sys_updated_on>
+        <web_service_definition display_value="IncidentActionRequests">8e765cc84f833200303022d18110c7a4</web_service_definition>
+        <web_service_version display_value="v1">b3d6d8c84f833200303022d18110c779</web_service_version>
+    </sys_ws_operation>
+</record_update>

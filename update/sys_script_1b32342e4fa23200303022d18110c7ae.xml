@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>false</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_77590_dlp_eur_dlp_incidents</collection>
+        <condition>current.state == 1 &amp;&amp; (current.u_responserule != false || current.reassigned_to !=false); </condition>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Add Incident Action Request</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+
+	// Add your code here
+	/*var responseRuleId = current.u_responserule.responseruleid;
+	gs.info("#### responseRuleId ######" + responseRuleId);
+	var responseRuleName = current.u_responserule.responserulename;
+	gs.info("#### responseRuleName ######" + responseRuleName);
+	current.responserulename = responseRuleName;
+	current.responseruleid = responseRuleId; 
+	current.isremediationactionrequested = true;
+	current.state = 2;
+	current.update();
+	*/
+	var gr = new GlideRecord('x_77590_dlp_eur_dlpincidentactionrequest');
+	gr.initialize();
+	gr.dlpincidentid = current.incidentid;
+	gr.requestedby = current.assigned_to.email;
+	if(current.u_responserule != false)
+		{
+			gs.info("#### responseRuleId ######" + current.u_responserule.responseruleid);
+			gr.responseruleid = current.u_responserule.responseruleid;
+			gr.requesttype = 'REMEDIATION';
+			current.deleteRecord();
+		}
+	else if (current.reassigned_to != false)
+		{
+			gs.info("#### responseRuleId ######" + current.reassigned_to);
+			gr.reassignedto = current.reassigned_to.name;
+			gr.reassignedtoemail = current.reassigned_to.email;
+			gr.requesttype = 'REASSIGNMENT';
+			current.assigned_to = current.reassigned_to;
+			current.update();
+		}
+	gr.insert();
+
+	
+	})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-05-08 10:50:44</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>1b32342e4fa23200303022d18110c7ae</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Add Incident Action Request</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="DLP End User Remediation Portal" source="x_77590_dlp_eur">c6eaf9a44f223200303022d18110c732</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="DLP End User Remediation Portal">c6eaf9a44f223200303022d18110c732</sys_scope>
+        <sys_update_name>sys_script_1b32342e4fa23200303022d18110c7ae</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-05-26 04:03:03</sys_updated_on>
+        <template/>
+        <when>after</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=1b32342e4fa23200303022d18110c7ae"/>
+</record_update>

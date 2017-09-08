@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="RemediationAction" max_length="40" name="x_77590_dlp_eur_remediationaction" type="collection">
+        <element label="IncidentType" max_length="40" name="incidenttype" type="string"/>
+        <element label="IncidentTypeId" max_length="40" name="incidenttypeid" read_only="true" type="longint"/>
+        <element label="ResponseRuleId" max_length="40" name="responseruleid" type="longint"/>
+        <element display="true" label="ResponseRuleName" max_length="40" name="responserulename" type="string"/>
+    </element>
+</database>

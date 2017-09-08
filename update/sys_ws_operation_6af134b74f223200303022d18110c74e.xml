@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl/>
+        <http_method>GET</http_method>
+        <name>GetReassignments</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+	
+	gs.info("**** Get Remediation Reassignment Request Started ***** ");
+	
+	var writer = response.getStreamWriter(),
+	hdrs = {},
+		record_limit = 100,
+		gr_incidents = new GlideRecord('x_77590_dlp_eur_dlp_incidents');
+		
+		hdrs['Content-Type'] = 'application/json';
+		response.setStatus(200);
+		response.setHeaders(hdrs);
+		
+		gr_incidents.setLimit(record_limit);
+		gr_incidents.addQuery('isremediationactionrequested', false);
+		gr_incidents.addQuery('isreassigned', true);
+		gr_incidents.query();
+		
+		var uuid = gs.generateGUID();
+		
+		writer.writeString("{\"uuid\" : \"" +uuid + "\" , \"reassignments\" : ");
+			
+			var reassignments = [];
+			
+			gs.info("#### Incidnets Count ##### " + gr_incidents.getRowCount());
+			
+			while (gr_incidents.hasNext()) {
+				
+				var reassignment = {};
+					
+					var incident_rec = 	gr_incidents.next();
+					
+					gs.info("#### Got Incident ######");
+					reassignment.incidentId = gr_incidents.incidentid + '';
+					reassignment.remediatorName = gr_incidents.reassigned_to.name + '';
+					reassignment.remediatorEmail = gr_incidents.reassigned_to.email + '';
+					reassignments.push(reassignment);
+				}
+				writer.writeString(global.JSON.stringify(reassignments));
+				
+				//  close the response object
+				writer.writeString("}");
+				gs.info("**** Get Remediation Reassignment Request Completed ***** ");
+			})(request, response);]]></operation_script>
+        <operation_uri>/api/x_77590_dlp_eur/remediatorreassignmentrequest</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-05-12 09:44:42</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>6af134b74f223200303022d18110c74e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>GetReassignments</sys_name>
+        <sys_package display_value="DLP End User Remediation Portal" source="x_77590_dlp_eur">c6eaf9a44f223200303022d18110c732</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="DLP End User Remediation Portal">c6eaf9a44f223200303022d18110c732</sys_scope>
+        <sys_update_name>sys_ws_operation_6af134b74f223200303022d18110c74e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-05-12 09:44:42</sys_updated_on>
+        <web_service_definition display_value="RemediatorReassignmentRequest">ff917c7b4f223200303022d18110c7ef</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>
